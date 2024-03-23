@@ -30,7 +30,10 @@ export const bookSlice = createSlice({
             id: number
         }>) => {
             const { id } = action.payload
-            state.removedBookStack.push(state.bookList.find(book => book.id === id))
+            const book = state.bookList.find(book => book.id === id)
+            if(book){
+                state.removedBookStack.push(state.bookList.find(book => book.id === id))
+            }
             state.bookList = state.bookList.filter(book => book.id!== id)
         },
 
