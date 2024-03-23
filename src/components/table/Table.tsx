@@ -14,8 +14,6 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
 
     const dispatch = useAppDispatch()
     const { bookList, removedBookStack } = useAppSelector(state => state.books)
-    console.log(bookList)
-    console.log(removedBookStack)
 
     const deleteBookById = (id: number) => {
         dispatch(removeBook({

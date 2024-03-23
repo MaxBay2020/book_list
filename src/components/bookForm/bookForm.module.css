@@ -1,0 +1,52 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    min-width: 400px;
+    padding: 20px 40px;
+}
+
+.container > h2 {
+    font-size: 2.4rem;
+}
+
+.container > input,
+.container > select,
+.container > textarea{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 2rem;
+}
+
+
+.addButton {
+    align-self: flex-end;
+    width: 100px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-clip: padding-box;
+    background-color: #d88e4f;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0;
+    transition: all 0.25s ease-in-out;
+}
+
+.addButton:hover {
+    background-color: #fb8332;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    transform: translateY(-1px);
+}

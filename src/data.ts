@@ -14,6 +14,13 @@ export const navLinks: navLinkType[] = [
     }
 ]
 
+export const bookCategories = [
+    'Fantasy',
+    'Romance',
+    'How-to',
+    'Horror'
+]
+
 export const bookTableHeaders = ['name', 'price', 'category']
 
 export const bookList = [

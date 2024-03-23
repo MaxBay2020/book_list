@@ -9,11 +9,14 @@ import {BookType} from "../../lib/types/types";
 import { CiUndo } from "react-icons/ci";
 import {undoRemoval} from "../../lib/redux/features/bookSlice";
 import {useRouter} from "next/navigation";
+import Modal from "../../components/modal/Modal";
+import BookForm from "../../components/bookForm/BookForm";
 
 const Table = dynamic(() => import('@/components/table/Table'), { ssr: false })
 
 const BookListPage = () => {
     const [searchWord, setSearchWord] = useState<string>('')
+    const [show, setShow] = useState<boolean>(false)
     const router = useRouter()
 
     const debouncedSearchWord = useDebounce(searchWord, 1)
@@ -32,7 +35,7 @@ const BookListPage = () => {
     }
 
     const handleAddBook = () => {
-        router.push('/books/add')
+        setShow(true)
     }
 
     return (
@@ -62,6 +65,14 @@ const BookListPage = () => {
                 tableData={filteredbookList}
                 hasDelete={true}
             />
+
+            {/* book modal */}
+            <Modal
+                show={show}
+                onClose={() => setShow(false)}
+            >
+                <BookForm />
+            </Modal>
 
         </section>
     );
