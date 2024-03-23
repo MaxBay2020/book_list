@@ -8,6 +8,7 @@ import {useForm} from "react-hook-form";
 import bookSchema from "@/lib/schema/bookSchema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Alert from "../alert/Alert";
+import {BookFormType} from "../../lib/types/types";
 
 type UpdateBookFormProps = {
     isUpdate: true,
@@ -30,12 +31,12 @@ const BookForm = () => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm<BookType>({
+    } = useForm<BookFormType>({
         resolver: yupResolver(bookSchema)
     })
 
 
-    const handleAddBook = (newBook: BookType) => {
+    const handleAddBook = (newBook: BookFormType) => {
         console.log(newBook)
         // const newBook: BookType = {
         //     name: 'test',
@@ -62,7 +63,7 @@ const BookForm = () => {
                 { errors.price && <Alert severity='error'>{errors.price.message}</Alert> }
 
                 {/* book category field */}
-                <select name="category" id="bookCategory" {...register('category')} >
+                <select id="bookCategory" {...register('category')} >
                     {
                         bookCategories.map(category => (
                             <option key={category.id} value={category.id}>{category.name}</option>
@@ -73,7 +74,7 @@ const BookForm = () => {
 
 
                 {/* book description field */}
-                <textarea name="bookDesc" id="bookDesc" cols={30} rows={5} placeholder='book description' {...register('description')} />
+                <textarea id="bookDesc" cols={30} rows={5} placeholder='book description' {...register('description')} />
                 { errors.description && <Alert severity='error'>{errors.description.message}</Alert> }
 
                 {/* submit button */}

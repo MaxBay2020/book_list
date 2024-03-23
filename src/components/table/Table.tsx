@@ -2,7 +2,7 @@ import styles from './table.module.css'
 import {useAppDispatch, useAppSelector} from "../../lib/redux/hooks";
 import {removeBook} from "../../lib/redux/features/bookSlice";
 
-export type DataType = Record<string, string | number>
+export type DataType = Record<string, any>
 
 export type TableProps = {
     tableHeads: string[],
@@ -13,7 +13,6 @@ export type TableProps = {
 const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
 
     const dispatch = useAppDispatch()
-    const { bookList, removedBookStack } = useAppSelector(state => state.books)
 
     const deleteBookById = (id: number) => {
         dispatch(removeBook({
@@ -38,9 +37,13 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
                 tableData.map((row, index) => (
                     <tr key={index}>
                         {
-                            tableHeads.map(key => (
-                                <td key={key}>{row[key]}</td>
-                            ))
+                            tableHeads.map(key => {
+                                if(typeof row[key] === 'object'){
+                                    return <td key={key}>{row[key].name}</td>
+                                }else {
+                                    return <td key={key}>{row[key]}</td>
+                                }
+                            })
                         }
                         {
                             hasDelete

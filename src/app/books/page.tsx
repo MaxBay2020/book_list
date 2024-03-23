@@ -27,7 +27,7 @@ const BookListPage = () => {
     const filteredbookList = bookList.filter((book: BookType) =>
         book.name.toLowerCase().includes(debouncedSearchWord.toLowerCase())
         ||
-        book.category.toLowerCase().includes(debouncedSearchWord.toLowerCase())
+        book.category.name.toLowerCase().includes(debouncedSearchWord.toLowerCase())
     )
 
     const handleUndoRemoval = () => {
