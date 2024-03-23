@@ -1,0 +1,21 @@
+.container {
+    height: 40px;
+    width: 100%;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff
+}
+.success{
+    background-color: #457c3b;
+}
+.error{
+    background-color: #c33f38;
+}
+
+.icon{
+    font-size: 20px;
+}

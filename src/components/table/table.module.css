@@ -31,7 +31,19 @@
     border-bottom: 2px solid #e48a40;
 }
 
-/*.table tbody tr.active-row {*/
-/*    font-weight: bold;*/
-/*    color: #e48a40;*/
-/*}*/
+.deleteButton{
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    background: #e62222;
+    color: #fff;
+    font-size: 1.6rem;
+    transition: all 0.2s ease-in-out;
+}
+.deleteButton:hover{
+    box-shadow: 1px 1px 10px #e62222;
+    transform: translateY(-1px);
+}
