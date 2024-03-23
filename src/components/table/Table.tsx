@@ -17,7 +17,7 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
     console.log(bookList)
     console.log(removedBookStack)
 
-    const deleteBookById = id => {
+    const deleteBookById = (id: number) => {
         dispatch(removeBook({
             id
         }))

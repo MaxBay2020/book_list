@@ -8,11 +8,13 @@ import useDebounce from "../../customHooks/useDebounce";
 import {BookType} from "../../lib/types/types";
 import { CiUndo } from "react-icons/ci";
 import {undoRemoval} from "../../lib/redux/features/bookSlice";
+import {useRouter} from "next/navigation";
 
 const Table = dynamic(() => import('@/components/table/Table'), { ssr: false })
 
 const BookListPage = () => {
     const [searchWord, setSearchWord] = useState<string>('')
+    const router = useRouter()
 
     const debouncedSearchWord = useDebounce(searchWord, 1)
 
@@ -30,7 +32,7 @@ const BookListPage = () => {
     }
 
     const handleAddBook = () => {
-
+        router.push('/books/add')
     }
 
     return (
