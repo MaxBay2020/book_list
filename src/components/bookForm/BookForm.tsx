@@ -30,21 +30,29 @@ const BookForm = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm<BookFormType>({
         resolver: yupResolver(bookSchema)
     })
 
 
-    const handleAddBook = (newBook: BookFormType) => {
-        console.log(newBook)
-        // const newBook: BookType = {
-        //     name: 'test',
-        //     price: '9.9',
-        //     description: 'desc',
-        //     category: bookCategories[0]
-        // }
-        // dispatch(addBook({newBook}))
+    const handleAddBook = (bookForm: BookFormType) => {
+        console.log(bookForm)
+        const {
+            name,
+            price,
+            category,
+            description
+        } = bookForm
+        const newBook: BookType = {
+            name,
+            price: price.toString(),
+            category: bookCategories.find(c => c.id === +category),
+            description
+        }
+        dispatch(addBook({newBook}))
+        reset()
     }
 
     return (
