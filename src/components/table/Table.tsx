@@ -1,6 +1,7 @@
 import styles from './table.module.css'
 import {useAppDispatch, useAppSelector} from "../../lib/redux/hooks";
 import {removeBook} from "../../lib/redux/features/bookSlice";
+import {BookType} from "../../lib/types/types";
 
 export type DataType = Record<string, string | number>
 
@@ -37,7 +38,7 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
             </thead>
             <tbody>
             {
-                tableData.map((row, index) => (
+                tableData.map((row: BookType, index) => (
                     <tr key={index}>
                         {
                             tableHeads.map(key => (
