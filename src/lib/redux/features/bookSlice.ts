@@ -17,7 +17,9 @@ export const bookSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        addBook: (state, action: PayloadAction<BookType>) => {
+        addBook: (state, action: PayloadAction<{
+            newBook: BookType
+        }>) => {
             const { newBook } = action.payload
             state.bookList.push(newBook)
         },
