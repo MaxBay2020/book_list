@@ -39,7 +39,9 @@ export const bookSlice = createSlice({
 
         undoRemoval: (state) => {
             const top = state.removedBookStack.pop()
-            state.bookList.unshift(top)
+            if(top){
+                state.bookList.unshift(top)
+            }
         }
     },
 })
