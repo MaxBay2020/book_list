@@ -49,7 +49,7 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
                             hasDelete
                             &&
                             <td>
-                                <button className={styles.deleteButton} onClick={() => deleteBookById(row.id)}>
+                                <button className={styles.deleteButton} onClick={() => deleteBookById(+row.id)}>
                                     Delete
                                 </button>
                             </td>
