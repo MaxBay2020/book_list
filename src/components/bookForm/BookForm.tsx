@@ -21,6 +21,8 @@ const BookForm = ({ setShow }: BookFormProps) => {
     const { currentBook } = useAppSelector(state => state.books)
     const dispatch = useAppDispatch()
 
+    console.log(currentBook)
+
     const {
         register,
         handleSubmit,
@@ -34,8 +36,8 @@ const BookForm = ({ setShow }: BookFormProps) => {
     useEffect(() => {
         if(currentBook){
             setValue('name', currentBook.name)
-            setValue('price', currentBook.price)
-            setValue('category', currentBook.category.id)
+            setValue('price', +currentBook.price)
+            setValue('category', currentBook.category.id.toString())
             setValue('description', currentBook.description)
         }
     }, [currentBook])

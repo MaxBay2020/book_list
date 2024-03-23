@@ -14,6 +14,6 @@ export type BookFormType = {
 }
 
 export type BookCategory = {
-    id?: number,
+    id: number,
     name: string
 }
