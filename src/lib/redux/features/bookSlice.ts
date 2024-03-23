@@ -4,12 +4,14 @@ import {bookList} from "@/data";
 import {BookType} from "@/lib/types/types";
 
 type bookStateType = {
-    bookList: BookType[]
+    bookList: BookType[],
+    removedBookStack: BookType[]
 }
 
 // Define the initial state using that type
 const initialState: bookStateType = {
-    bookList
+    bookList,
+    removedBookStack: []
 }
 
 export const bookSlice = createSlice({
@@ -23,14 +25,26 @@ export const bookSlice = createSlice({
             const { newBook } = action.payload
             state.bookList.push(newBook)
         },
+
         removeBook: (state, action: PayloadAction<{
-            id: string
+            id: number
         }>) => {
             const { id } = action.payload
+            state.removedBookStack.push(state.bookList.find(book => book.id === id))
+            state.bookList = state.bookList.filter(book => book.id!== id)
         },
+
+        undoRemoval: (state) => {
+            const top = state.removedBookStack.pop()
+            state.bookList.unshift(top)
+        }
     },
 })
 
-export const { addBook, removeBook } = bookSlice.actions
+export const {
+    addBook,
+    removeBook,
+    undoRemoval
+} = bookSlice.actions
 
 export default bookSlice.reducer
