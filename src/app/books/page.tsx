@@ -1,24 +1,48 @@
 'use client'
-import React, {useState} from 'react';
-// import Table from "@/components/table/Table";
+import styles from './page.module.css'
 import {bookTableHeaders, bookList} from "@/data";
 import {useAppSelector} from "../../lib/redux/hooks";
 import dynamic from "next/dynamic";
+import {useState} from "react";
+import useDebounce from "../../customHooks/useDebounce";
+import {BookType} from "../../lib/types/types";
 
 const Table = dynamic(() => import('@/components/table/Table'), { ssr: false })
 
 const BookListPage = () => {
-    const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(5)
+    const [searchWord, setSearchWord] = useState('');
+
+    const debouncedSearchWord = useDebounce(searchWord, 1)
 
     const { bookList } = useAppSelector(state => state.books)
 
+    const filteredbookList = bookList.filter((book: BookType) =>
+        book.name.toLowerCase().includes(debouncedSearchWord.toLowerCase())
+        ||
+        book.category.toLowerCase().includes(debouncedSearchWord.toLowerCase())
+    )
+
+
     return (
-        <section>
+        <section className={styles.container}>
+            <div className={styles.flexBox}>
+                {/* search bar */}
+                <input
+                    type="text"
+                    placeholder='search...'
+                    className={styles.searchBar}
+                    value={searchWord}
+                    onChange={e => setSearchWord(e.target.value)}
+                />
+                {/* add button */}
+                <button className={styles.addButton}>Add</button>
+            </div>
+            {/* table */}
             <Table
                 tableHeads={bookTableHeaders}
-                tableData={bookList}
+                tableData={filteredbookList}
             />
+
         </section>
     );
 };

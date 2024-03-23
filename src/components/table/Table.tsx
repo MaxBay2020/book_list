@@ -1,3 +1,4 @@
+import styles from './table.module.css'
 
 export type DataType = Record<string, string | number>
 
@@ -8,7 +9,8 @@ export type TableProps = {
 
 const Table = ({tableHeads, tableData}: TableProps) => {
     return (
-        <table>
+        <table className={styles.table}>
+            <thead>
             <tr>
                 {
                     tableHeads.map((head, index) => (
@@ -16,6 +18,8 @@ const Table = ({tableHeads, tableData}: TableProps) => {
                     ))
                 }
             </tr>
+            </thead>
+            <tbody>
             {
                 tableData.map((row, index) => (
                     <tr key={index}>
@@ -27,6 +31,7 @@ const Table = ({tableHeads, tableData}: TableProps) => {
                     </tr>
                 ))
             }
+            </tbody>
         </table>
     );
 };
