@@ -23,7 +23,9 @@ export const bookSlice = createSlice({
             const { newBook } = action.payload
             state.bookList.push(newBook)
         },
-        removeBook: (state, action: PayloadAction<string>) => {
+        removeBook: (state, action: PayloadAction<{
+            id: string
+        }>) => {
             const { id } = action.payload
         },
     },
