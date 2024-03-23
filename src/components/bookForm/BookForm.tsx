@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BookType} from "@/lib/types/types";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/hooks";
 import styles from './bookForm.module.css'
@@ -9,20 +9,14 @@ import bookSchema from "@/lib/schema/bookSchema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Alert from "../alert/Alert";
 import {BookFormType} from "../../lib/types/types";
+import {clearCurrentBook, updateBook} from "../../lib/redux/features/bookSlice";
 
-type UpdateBookFormProps = {
-    isUpdate: true,
-    currentBook: BookType
+
+export type BookFormProps = {
+    setShow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-type CreateBookFormProps = {
-    isUpdate: false,
-    currentBook?: never
-}
-
-type BookFormProps = UpdateBookFormProps | CreateBookFormProps
-
-const BookForm = () => {
+const BookForm = ({ setShow }: BookFormProps) => {
 
     const { currentBook } = useAppSelector(state => state.books)
     const dispatch = useAppDispatch()
@@ -31,14 +25,24 @@ const BookForm = () => {
         register,
         handleSubmit,
         reset,
+        setValue,
         formState: { errors }
     } = useForm<BookFormType>({
         resolver: yupResolver(bookSchema)
     })
 
+    useEffect(() => {
+        if(currentBook){
+            setValue('name', currentBook.name)
+            setValue('price', currentBook.price)
+            setValue('category', currentBook.category.id)
+            setValue('description', currentBook.description)
+        }
+    }, [currentBook])
+
+
 
     const handleAddBook = (bookForm: BookFormType) => {
-        console.log(bookForm)
         const {
             name,
             price,
@@ -51,21 +55,38 @@ const BookForm = () => {
             return
         }
 
-        const newBook: BookType = {
-            name,
-            price: price.toString(),
-            category: categoryFound,
-            description
+        if(currentBook){
+            // update book
+            const updatedBook: BookType = {
+                ...currentBook,
+                name,
+                price: price.toString(),
+                category: categoryFound,
+                description
+            }
+
+
+            dispatch(updateBook({ updatedBook }))
+            dispatch(clearCurrentBook())
+            setShow(false)
+        }else{
+            // create book
+            const newBook: BookType = {
+                name,
+                price: price.toString(),
+                category: categoryFound,
+                description
+            }
+            dispatch(addBook({newBook}))
+            reset()
         }
-        dispatch(addBook({newBook}))
-        reset()
     }
 
     return (
         <section>
             <form onSubmit={handleSubmit(handleAddBook)} className={styles.container}>
                 {
-                    currentBook ? <h2>Book ${currentBook?.name}</h2> : <h2>Create New Book</h2>
+                    currentBook ? <h2>📖 {currentBook?.name}</h2> : <h2>Create New Book</h2>
                 }
 
                 {/* book name field */}
@@ -93,7 +114,7 @@ const BookForm = () => {
 
                 {/* submit button */}
                 <button type='submit' className={styles.addButton} >
-                    Add
+                    {currentBook ? 'Update' : 'Add'}
                 </button>
             </form>
         </section>

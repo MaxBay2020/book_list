@@ -47,3 +47,8 @@
     box-shadow: 1px 1px 10px #e62222;
     transform: translateY(-1px);
 }
+.eachRow:hover{
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: rgba(228, 138, 64, 0.31) !important;
+}

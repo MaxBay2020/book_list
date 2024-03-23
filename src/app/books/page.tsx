@@ -7,7 +7,7 @@ import {useState} from "react";
 import useDebounce from "../../customHooks/useDebounce";
 import {BookType} from "../../lib/types/types";
 import { CiUndo } from "react-icons/ci";
-import {undoRemoval} from "../../lib/redux/features/bookSlice";
+import {clearCurrentBook, undoRemoval} from "../../lib/redux/features/bookSlice";
 import {useRouter} from "next/navigation";
 import Modal from "../../components/modal/Modal";
 import BookForm from "../../components/bookForm/BookForm";
@@ -38,6 +38,11 @@ const BookListPage = () => {
         setShow(true)
     }
 
+    const handleCloseModal = () => {
+        dispatch(clearCurrentBook())
+        setShow(false)
+    }
+
     return (
         <section className={styles.container}>
             <div className={styles.flexBox}>
@@ -64,14 +69,15 @@ const BookListPage = () => {
                 tableHeads={bookTableHeaders}
                 tableData={filteredbookList}
                 hasDelete={true}
+                setShow={setShow}
             />
 
             {/* book modal */}
             <Modal
                 show={show}
-                onClose={() => setShow(false)}
+                onClose={() => handleCloseModal()}
             >
-                <BookForm />
+                <BookForm setShow={setShow} />
             </Modal>
 
         </section>

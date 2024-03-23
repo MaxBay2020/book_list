@@ -58,7 +58,7 @@ export const bookList = [
             "id": 1,
             "name": "Action"
         },
-        "description": "A epic battle that captivates and entertains."
+        "description": "A good book worthy to read."
     },
     {
         "id": 2,
