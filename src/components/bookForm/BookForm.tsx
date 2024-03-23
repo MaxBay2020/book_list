@@ -45,10 +45,16 @@ const BookForm = () => {
             category,
             description
         } = bookForm
+
+        const categoryFound = bookCategories.find(c => c.id === +category)
+        if(!categoryFound){
+            return
+        }
+
         const newBook: BookType = {
             name,
             price: price.toString(),
-            category: bookCategories.find(c => c.id === +category),
+            category: categoryFound,
             description
         }
         dispatch(addBook({newBook}))
