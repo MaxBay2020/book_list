@@ -49,7 +49,14 @@
 
 
 @media (max-width: 375px){
+    .container{
+        height: 6rem;
+    }
     .logo{
         display: none;
+    }
+
+    .nav > li > a {
+        font-size: 1.5rem;
     }
 }
