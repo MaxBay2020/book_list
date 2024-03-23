@@ -1,10 +1,10 @@
-import React from 'react';
+import styles from './page.module.css'
 
 const HomePage = () => {
   return (
-      <div>
+      <p className={styles.container}>
         home page
-      </div>
+      </p>
   );
 };
 
