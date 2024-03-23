@@ -1,3 +1,5 @@
+import {BookCategory} from "./lib/types/types";
+
 type navLinkType = {
     name: string,
     path: string
@@ -14,11 +16,35 @@ export const navLinks: navLinkType[] = [
     }
 ]
 
-export const bookCategories = [
-    'Fantasy',
-    'Romance',
-    'How-to',
-    'Horror'
+export const bookCategories: BookCategory[] = [
+    {
+        id: 1,
+        name: 'Action'
+    },
+    {
+        id: 2,
+        name: 'Biography'
+    },
+    {
+        id: 3,
+        name: 'History'
+    },
+    {
+        id: 4,
+        name: 'Horror'
+    },
+    {
+        id: 5,
+        name: 'Kids'
+    },
+    {
+        id: 6,
+        name: 'Learning'
+    },
+    {
+        id: 7,
+        name: 'Sci-Fi'
+    }
 ]
 
 export const bookTableHeaders = ['name', 'price', 'category']
