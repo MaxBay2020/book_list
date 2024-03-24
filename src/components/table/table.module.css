@@ -3,7 +3,7 @@
     margin: 25px 0;
     font-size: 0.9em;
     width: 100%;
-    min-width: 400px;
+    max-width: 1200px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -51,4 +51,44 @@
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     background-color: rgba(228, 138, 64, 0.31) !important;
+}
+
+@media (max-width: 992px) {
+    .table th,
+    .table td {
+        padding: 8px 12px;
+        font-size: 1.6rem;
+    }
+
+    .deleteButton{
+        width: 80px;
+        height: 30px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .table th,
+    .table td {
+        padding: 8px 12px;
+        font-size: 1.2rem;
+    }
+
+    .deleteButton{
+        width: 60px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 375px) {
+    .table th,
+    .table td {
+        padding: 6px 8px;
+        font-size: 1rem;
+    }
+
+    .deleteButton{
+        width: 60px;
+        height: 20px;
+    }
 }

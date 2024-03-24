@@ -8,11 +8,12 @@
 
 ## Extra bonus:
 + Using TypeScript
-+ Deployed
++ Deployed through Vercel (CI/CD)
 + Advanced CSS style
-+ Responsive design
++ Totally responsive design
 + Debounce search
 + Stack data structure for undo book removal
-+ Made reusable components
-+ Git skills
++ SEO optimization
++ Reusable components
++ Git version control
 

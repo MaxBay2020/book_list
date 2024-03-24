@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BookType} from "@/lib/types/types";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/hooks";
 import styles from './bookForm.module.css'
@@ -21,7 +21,7 @@ const BookForm = ({ setShow }: BookFormProps) => {
     const { currentBook } = useAppSelector(state => state.books)
     const dispatch = useAppDispatch()
 
-    console.log(currentBook)
+    const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false)
 
     const {
         register,
@@ -41,6 +41,15 @@ const BookForm = ({ setShow }: BookFormProps) => {
             setValue('description', currentBook.description)
         }
     }, [currentBook])
+
+    useEffect(() => {
+        if(showSuccessAlert){
+            setTimeout(() => {
+                setShowSuccessAlert(false)
+            }, 1000)
+        }
+    }, [showSuccessAlert]);
+
 
 
 
@@ -81,6 +90,7 @@ const BookForm = ({ setShow }: BookFormProps) => {
             }
             dispatch(addBook({newBook}))
             reset()
+            setShowSuccessAlert(true)
         }
     }
 
@@ -89,6 +99,9 @@ const BookForm = ({ setShow }: BookFormProps) => {
             <form onSubmit={handleSubmit(handleAddBook)} className={styles.container}>
                 {
                     currentBook ? <h2>📖 {currentBook?.name}</h2> : <h2>Create New Book</h2>
+                }
+                {
+                    showSuccessAlert && <Alert severity='success'>Book added successfully!</Alert>
                 }
 
                 {/* book name field */}

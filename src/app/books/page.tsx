@@ -11,6 +11,7 @@ import {clearCurrentBook, undoRemoval} from "../../lib/redux/features/bookSlice"
 import {useRouter} from "next/navigation";
 import Modal from "../../components/modal/Modal";
 import BookForm from "../../components/bookForm/BookForm";
+import {Metadata} from "next";
 
 const Table = dynamic(() => import('@/components/table/Table'), { ssr: false })
 
