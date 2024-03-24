@@ -1,23 +1,31 @@
 import styles from './table.module.css'
 import {useAppDispatch, useAppSelector} from "../../lib/redux/hooks";
-import {removeBook} from "../../lib/redux/features/bookSlice";
+import {removeBook, setCurrentBook} from "../../lib/redux/features/bookSlice";
+import React from "react";
 
 export type DataType = Record<string, any>
 
 export type TableProps = {
     tableHeads: string[],
     tableData: DataType[],
-    hasDelete?: boolean
+    hasDelete?: boolean,
+    setShow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
+const Table = ({tableHeads, tableData, hasDelete = false, setShow}: TableProps) => {
 
     const dispatch = useAppDispatch()
 
-    const deleteBookById = (id: number) => {
+    const deleteBookById = (e: React.MouseEvent<HTMLElement>, id: number) => {
+        e.stopPropagation()
         dispatch(removeBook({
             id
         }))
+    }
+
+    const handleClickRow = (id: any) => {
+        setShow(true)
+        dispatch(setCurrentBook({ id }))
     }
 
     return (
@@ -35,7 +43,7 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
             <tbody>
             {
                 tableData.map((row, index) => (
-                    <tr key={index}>
+                    <tr key={index} onClick={() => handleClickRow(row.id)} className={styles.eachRow}>
                         {
                             tableHeads.map(key => {
                                 if(typeof row[key] === 'object'){
@@ -49,7 +57,7 @@ const Table = ({tableHeads, tableData, hasDelete = false}: TableProps) => {
                             hasDelete
                             &&
                             <td>
-                                <button className={styles.deleteButton} onClick={() => deleteBookById(+row.id)}>
+                                <button className={styles.deleteButton} onClick={(e: React.MouseEvent<HTMLElement>) => deleteBookById(e, +row.id)}>
                                     Delete
                                 </button>
                             </td>

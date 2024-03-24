@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {BookType} from "@/lib/types/types";
 import {useAppDispatch, useAppSelector} from "@/lib/redux/hooks";
 import styles from './bookForm.module.css'
@@ -9,49 +9,99 @@ import bookSchema from "@/lib/schema/bookSchema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Alert from "../alert/Alert";
 import {BookFormType} from "../../lib/types/types";
+import {clearCurrentBook, updateBook} from "../../lib/redux/features/bookSlice";
 
-type UpdateBookFormProps = {
-    isUpdate: true,
-    currentBook: BookType
+
+export type BookFormProps = {
+    setShow: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-type CreateBookFormProps = {
-    isUpdate: false,
-    currentBook?: never
-}
-
-type BookFormProps = UpdateBookFormProps | CreateBookFormProps
-
-const BookForm = () => {
+const BookForm = ({ setShow }: BookFormProps) => {
 
     const { currentBook } = useAppSelector(state => state.books)
     const dispatch = useAppDispatch()
 
+    const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false)
+
     const {
         register,
         handleSubmit,
+        reset,
+        setValue,
         formState: { errors }
     } = useForm<BookFormType>({
         resolver: yupResolver(bookSchema)
     })
 
+    useEffect(() => {
+        if(currentBook){
+            setValue('name', currentBook.name)
+            setValue('price', +currentBook.price)
+            setValue('category', currentBook.category.id.toString())
+            setValue('description', currentBook.description)
+        }
+    }, [currentBook])
 
-    const handleAddBook = (newBook: BookFormType) => {
-        console.log(newBook)
-        // const newBook: BookType = {
-        //     name: 'test',
-        //     price: '9.9',
-        //     description: 'desc',
-        //     category: bookCategories[0]
-        // }
-        // dispatch(addBook({newBook}))
+    useEffect(() => {
+        if(showSuccessAlert){
+            setTimeout(() => {
+                setShowSuccessAlert(false)
+            }, 1000)
+        }
+    }, [showSuccessAlert]);
+
+
+
+
+    const handleAddBook = (bookForm: BookFormType) => {
+        const {
+            name,
+            price,
+            category,
+            description
+        } = bookForm
+
+        const categoryFound = bookCategories.find(c => c.id === +category)
+        if(!categoryFound){
+            return
+        }
+
+        if(currentBook){
+            // update book
+            const updatedBook: BookType = {
+                ...currentBook,
+                name,
+                price: price.toString(),
+                category: categoryFound,
+                description
+            }
+
+
+            dispatch(updateBook({ updatedBook }))
+            dispatch(clearCurrentBook())
+            setShow(false)
+        }else{
+            // create book
+            const newBook: BookType = {
+                name,
+                price: price.toString(),
+                category: categoryFound,
+                description
+            }
+            dispatch(addBook({newBook}))
+            reset()
+            setShowSuccessAlert(true)
+        }
     }
 
     return (
         <section>
             <form onSubmit={handleSubmit(handleAddBook)} className={styles.container}>
                 {
-                    currentBook ? <h2>Book ${currentBook?.name}</h2> : <h2>Create New Book</h2>
+                    currentBook ? <h2>📖 {currentBook?.name}</h2> : <h2>Create New Book</h2>
+                }
+                {
+                    showSuccessAlert && <Alert severity='success'>Book added successfully!</Alert>
                 }
 
                 {/* book name field */}
@@ -79,7 +129,7 @@ const BookForm = () => {
 
                 {/* submit button */}
                 <button type='submit' className={styles.addButton} >
-                    Add
+                    {currentBook ? 'Update' : 'Add'}
                 </button>
             </form>
         </section>

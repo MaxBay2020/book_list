@@ -47,6 +47,35 @@ export const bookSlice = createSlice({
             if(top){
                 state.bookList.unshift(top)
             }
+        },
+
+        setCurrentBook: (state, action: PayloadAction<{
+            id: number
+        }>) => {
+            const { id } = action.payload
+            const book = state.bookList.find(book => book.id === id)
+            if(book){
+                state.currentBook = book
+            }
+        },
+
+        updateBook: (state, action: PayloadAction<{
+            updatedBook: BookType
+        }>) => {
+            const { updatedBook } = action.payload
+
+            console.log(updatedBook)
+
+            state.bookList = state.bookList.map(book => {
+                if(book.id === updatedBook.id){
+                    return updatedBook
+                }
+                return book
+            })
+        },
+
+        clearCurrentBook: (state) => {
+            state.currentBook = null
         }
     },
 })
@@ -54,7 +83,10 @@ export const bookSlice = createSlice({
 export const {
     addBook,
     removeBook,
-    undoRemoval
+    undoRemoval,
+    setCurrentBook,
+    updateBook,
+    clearCurrentBook
 } = bookSlice.actions
 
 export default bookSlice.reducer

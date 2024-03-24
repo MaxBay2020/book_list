@@ -19,3 +19,29 @@
 .icon{
     font-size: 20px;
 }
+
+
+@media (max-width: 768px) {
+    .container {
+        height: 40px;
+        width: 100%;
+        padding: 10px 10px;
+        font-size: 1.4rem;
+        gap: 8px;
+    }
+    .icon{
+        font-size: 16px;
+    }
+}
+@media (max-width: 375px) {
+    .container {
+        height: 20px;
+        width: 100%;
+        padding: 6px 10px;
+        font-size: 1rem;
+        gap: 8px;
+    }
+    .icon{
+        font-size: 14px;
+    }
+}
