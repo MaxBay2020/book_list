@@ -13,6 +13,7 @@
 + Totally responsive design
 + Debounce search
 + Stack data structure for undo book removal
++ Form validation
 + SEO optimization
 + Reusable components
 + Git version control
